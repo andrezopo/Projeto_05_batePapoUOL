@@ -1,17 +1,46 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bate Puip Uiiil</title>
     <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="style.css">    
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    
+    <!-- container para envolver todo o conteúdo -->
+    <div class="container">
+        <!-- Topo (não sei se deve ser fixo) -->
+        <div class="topo">
+            <div class="logo-uol"><img src="imagens/logo-bate-papo.png" ></div>
+            <ion-icon name="people"></ion-icon>
+        </div>
+        <div class="mensagens">
+            <!-- Aqui entra o conteúdo do JavaScript através do servidor/API -->
+            <div class="mensagem"><span><h4>(hora local)</h4><strong> João</strong> entra na sala...</span></div>
+            <div class="mensagem"><span><h4>(hora local)</h4><strong> João</strong> entra na sala...</span></div>
+            <div class="mensagem"><span><h4>(hora local)</h4><strong> João</strong> entra na sala...</span></div>
+            <div class="mensagem"><span><h4>(hora local)</h4><strong> João</strong> entra na sala...</span></div>
+            
+
+        </div>
+        <!-- Faixa inferior fixa para escrever novas mensagens -->
+        <div class="escrever-mensagem">
+            <input type="text" placeholder="Escreva aqui...">
+            <ion-icon onclick="enviarMensagem()" name="paper-plane-outline"></ion-icon>
+        </div>
+
+    </div>
 
 
+
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="scripts.js"></script>
 </body>
+
 </html>

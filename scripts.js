@@ -1,7 +1,7 @@
 let mensagensDom = document.querySelector(".mensagens")
 let mensagens = [];
 let nome;
-
+let mensagemAEnviar = document.querySelector("input");
 
 function buscarMensagens() {
     let promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages")
@@ -53,14 +53,20 @@ function falhaUsername(erro) {
 
 function enviarMensagem() {
     let mensagemAEnviar = document.querySelector("input");
+
     let mensagem = {
         from: nome,
         to: "Todos",
         text: mensagemAEnviar.value,
         type: "message",
     }
-    console.log(mensagem)
     let promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", mensagem);
     promise.then(buscarMensagens);
     mensagemAEnviar.value = null;
 }
+
+document.querySelector("input").addEventListener("keydown", function (e){
+    if (e.key == "Enter"){
+        enviarMensagem(e);
+    }
+})

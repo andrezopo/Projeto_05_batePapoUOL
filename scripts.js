@@ -3,7 +3,8 @@ let participantesDom = document.querySelector(".contatos");
 let mensagens = [];
 let participantes = [];
 let nome;
-let mensagemAEnviar = document.querySelector("input");
+let ultimoElemento;
+let mensagemInput = document.querySelector(".escrever-mensagem div");
 let destinatario = "Todos";
 let tipoMensagem = "message";
 
@@ -35,11 +36,15 @@ function fazerLogin(){
 }
 
 function renderizarMensagens(resposta) {
-    if (mensagens !== resposta.data){
+    ultimoElemento = resposta.data[resposta.data.length -1];
+    if (mensagens[mensagens.length -1] !== ultimoElemento){
         mensagens = resposta.data
         povoarDOM(mensagens)
         let ultimaMensagem = document.querySelector(".mensagens > :last-child");
         ultimaMensagem.scrollIntoView();
+    }else{
+        mensagens = resposta.data
+        povoarDOM(mensagens)
     }
 }
 
@@ -48,6 +53,8 @@ function definirUsuario() {
     document.querySelector(".login").classList.add("invisivel");
     document.querySelector(".carregando").classList.remove("invisivel");
     let promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", { name: nome });
+    promise.then(buscarContatos);
+    promise.then(buscarMensagens);
     promise.then(atualizarMensagens);
     promise.then(atualizarParticipantes);
     promise.then(manterConexao);
@@ -71,7 +78,7 @@ function falhaUsername(erro) {
 }
 
 function enviarMensagem() {
-    let mensagemAEnviar = document.querySelector(".escrever-mensagem input");
+    let mensagemAEnviar = document.querySelector(".escrever-mensagem div input");
 
     let mensagem = {
         from: nome,
@@ -101,7 +108,14 @@ function renderizarParticipantes(resposta){
         </div>`
         participantes = resposta.data;
         for (let i = 0; i < participantes.length; i++){
-            if (participantes[i].name !== nome) {
+            if (participantes[i].name === destinatario){
+                participantesDom.innerHTML += `
+                <div class="contato">
+                    <ion-icon name="person-circle"></ion-icon>
+                    <h2 onclick="selecionarContato(this)"><span>${participantes[i].name}</span><ion-icon class="invisivel selecionado" name="checkmark-sharp"></ion-icon></h2>
+                </div>`
+            }
+            else if (participantes[i].name !== nome) {
                 participantesDom.innerHTML += `
                 <div class="contato">
                     <ion-icon name="person-circle"></ion-icon>
@@ -112,6 +126,23 @@ function renderizarParticipantes(resposta){
         }
     }
 
+}
+function alterarFraseDestinatario(){
+    if (tipoMensagem === "private_message"){
+        mensagemInput.innerHTML = `
+        <input type="text" placeholder="Escreva aqui...">
+        <h3>Enviando para ${destinatario} (reservadamente)</h3>
+        `
+    }else if (tipoMensagem === "message" && destinatario !== "Todos"){
+        mensagemInput.innerHTML = `
+        <input type="text" placeholder="Escreva aqui...">
+        <h3>Enviando para ${destinatario} (publicamente)</h3>
+        `
+    }else if (tipoMensagem === "message" && destinatario === "Todos"){
+        mensagemInput.innerHTML = `
+        <input type="text" placeholder="Escreva aqui...">
+        `
+    }
 }
 function atualizarParticipantes(){
     setInterval(buscarContatos, 10000);
@@ -124,6 +155,7 @@ function selecionarVisibilidade(elemento){
     }else {
         tipoMensagem = "message"
     }
+    alterarFraseDestinatario()
 }
 function selecionarContato(elemento){
     if (document.querySelectorAll(".selecionado").length > 1) {
@@ -131,9 +163,10 @@ function selecionarContato(elemento){
     }    
     elemento.querySelector("ion-icon").classList.add("selecionado");
     destinatario = elemento.querySelector("span").innerHTML;
+    alterarFraseDestinatario()
 }
 
-document.querySelector(".escrever-mensagem input").addEventListener("keydown", function (e){
+document.querySelector(".escrever-mensagem div input").addEventListener("keydown", function (e){
     if (e.key == "Enter"){
         enviarMensagem(e);
     }

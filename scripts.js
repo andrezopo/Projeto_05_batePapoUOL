@@ -169,8 +169,9 @@ function selecionarContato(elemento){
 
 function enviarComEnter() { 
     document.querySelector(".escrever-mensagem  div  input").addEventListener("keydown", function (e){
-    if (e.key == "Enter"){
+    if (e.key == "Enter" && mensagemInput.querySelector("input").value !== ""){
         enviarMensagem(e);
     }
 })
 }
+enviarComEnter();

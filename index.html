@@ -11,6 +11,23 @@
 </head>
 
 <body>
+    <!-- Tela de entrada do usuário -->
+    <div class="tela-entrada">
+        <div class="logo-entrada">
+            <img src="imagens/logo-entrada.png" alt="imagem de uma bola vermelha e amarela escrito ao lado direito: bate papo Uol">
+        </div>
+        <div class="login">
+            <div><input type="text" placeholder="Digite seu nome"></div>
+            <div class="botao" onclick="definirUsuario()">Entrar</div>
+        </div>
+        <div class="carregando invisivel">
+            <div class="spinner">
+                <img src="imagens/spinner.gif" alt="spinner de carregamento com oito bolinhas pretas rodando.">
+            </div>
+            <p>Entrando...</p>
+        </div>
+        
+    </div>
     <!-- container para envolver todo o conteúdo -->
     <div class="container">
         <!-- Topo (não sei se deve ser fixo) -->

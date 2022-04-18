@@ -9,7 +9,7 @@ function buscarMensagens() {
 }
 
 function povoarDOM(mensagens){
-    for (i = 0; i < mensagens.length; i++) {
+    for ( let i = 0; i < mensagens.length; i++) {
         if (mensagens[i].type === "status") {
             mensagensDom.innerHTML += `<div class="mensagem cinza"><span><h4>${mensagens[i].time}</h4><strong> ${mensagens[i].from}</strong> ${mensagens[i].text}</span></div>`
         }
@@ -21,6 +21,10 @@ function povoarDOM(mensagens){
         }
     }
 }
+function fazerLogin(){
+    let elemento = document.querySelector(".tela-entrada");
+    elemento.classList.add("invisivel");
+}
 
 function renderizarMensagens(resposta) {
     mensagens = resposta.data
@@ -30,9 +34,12 @@ function renderizarMensagens(resposta) {
 }
 
 function definirUsuario() {
-    nome = prompt("Qual o nome de usuário?");
+    nome = document.querySelector("input").value;
+    document.querySelector(".login").classList.add("invisivel");
+    document.querySelector(".carregando").classList.remove("invisivel");
     let promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", { name: nome });
     promise.then(atualizarMensagens);
+    promise.then(fazerLogin);
     promise.then(manterConexao);
     promise.catch(falhaUsername);
 
@@ -47,12 +54,13 @@ function atualizarMensagens(){
 function falhaUsername(erro) {
     if (erro.response.status === 400) {
         alert("Já existe um usuário online com este nome, escolha outro.")
-        definirUsuario()
+        document.querySelector(".login").classList.remove("invisivel");
+        document.querySelector(".carregando").classList.add("invisivel");
     }
 }
 
 function enviarMensagem() {
-    let mensagemAEnviar = document.querySelector("input");
+    let mensagemAEnviar = document.querySelector(".escrever-mensagem input");
 
     let mensagem = {
         from: nome,
@@ -65,7 +73,7 @@ function enviarMensagem() {
     mensagemAEnviar.value = null;
 }
 
-document.querySelector("input").addEventListener("keydown", function (e){
+document.querySelector(".escrever-mensagem input").addEventListener("keydown", function (e){
     if (e.key == "Enter"){
         enviarMensagem(e);
     }

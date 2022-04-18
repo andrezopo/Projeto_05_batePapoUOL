@@ -149,6 +149,55 @@ strong {
     border-width: 0px;
 
 }
+.contatos-ativos{
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+.sombreada{
+    width: 30%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.contatos-ativos ion-icon{
+    font-size: 20px;
+    margin: 10px;
+}
+.participantes{
+    width: 70%;
+    max-width: 70%;
+    padding: 18px;
+    background-color: #ffffff;
+}
+.contatos > div{
+    display: flex;
+    align-items: center;
+    line-height: 36px;
+}
+.selecao-contatos{
+    text-align: center;
+    height: 66px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.contato h2{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 40px);
+}
+h2 ion-icon{
+    color: green;
+    background-color: #ffffff;
+}
+input{
+    outline: none;
+}
 ::placeholder{
     color:#000000;
     opacity: 1;
@@ -161,4 +210,7 @@ strong {
 }
 .invisivel{
     display: none;
+}
+.selecionado{
+    display: initial;
 }

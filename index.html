@@ -33,7 +33,7 @@
         <!-- Topo (não sei se deve ser fixo) -->
         <div class="topo">
             <div class="logo-uol"><img src="imagens/logo-bate-papo.png" ></div>
-            <ion-icon name="people"></ion-icon>
+            <ion-icon onclick="visualizarContatos()" name="people"></ion-icon>
         </div>
         <div class="mensagens">
             <!-- Aqui entra o conteúdo do JavaScript através do servidor/API -->
@@ -45,6 +45,30 @@
         <div class="escrever-mensagem">
             <input type="text" placeholder="Escreva aqui...">
             <ion-icon onclick="enviarMensagem()" name="paper-plane-outline"></ion-icon>
+        </div>
+        <div class="contatos-ativos invisivel">
+            <div class="sombreada" onclick="visualizarContatos()"></div>
+            <div class="participantes">
+                <div class="selecao-contatos"><strong>Escolha um contato para enviar mensagem:</strong></div>
+                <div class="contatos">
+                    <div class="contato">
+                        <ion-icon name="people"></ion-icon>
+                        <h2 onclick="selecionarContato(this)"><span>Todos</span><ion-icon class="invisivel selecionado" name="checkmark-sharp"></ion-icon></h2>
+                        <!-- Aqui entra o resto dos participantes por JavaScript -->
+                    </div>
+                </div>
+                <div class="selecao-contatos"><strong>Escolha a visibilidade:</strong></div>
+                <div class="visibilidades contatos">
+                    <div class="visibilidade contato">
+                        <ion-icon name="lock-open"></ion-icon>
+                        <h2 onclick="selecionarVisibilidade(this)">Público<ion-icon class="invisivel selecionado" name="checkmark-sharp"></ion-icon></h2>
+                    </div>
+                    <div class="visibilidade contato">
+                        <ion-icon name="lock-closed"></ion-icon>
+                        <h2 onclick="selecionarVisibilidade(this)">Reservadamente<ion-icon class="invisivel" name="checkmark-sharp"></ion-icon></h2>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>

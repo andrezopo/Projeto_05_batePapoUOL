@@ -4,7 +4,7 @@ let mensagens = [];
 let participantes = [];
 let nome;
 let ultimoElemento;
-let mensagemInput = document.querySelector(".escrever-mensagem div");
+let mensagemInput = document.querySelector(".escrever-mensagem > div");
 let destinatario = "Todos";
 let tipoMensagem = "message";
 
@@ -88,7 +88,7 @@ function enviarMensagem() {
     }
     let promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", mensagem);
     promise.then(buscarMensagens);
-    mensagemAEnviar.value = null;
+    mensagemAEnviar.value = "";
     promise.catch(function () {window.location.reload()} );
 }
 function buscarContatos(){
@@ -143,6 +143,7 @@ function alterarFraseDestinatario(){
         <input type="text" placeholder="Escreva aqui...">
         `
     }
+    enviarComEnter();
 }
 function atualizarParticipantes(){
     setInterval(buscarContatos, 10000);
@@ -155,7 +156,7 @@ function selecionarVisibilidade(elemento){
     }else {
         tipoMensagem = "message"
     }
-    alterarFraseDestinatario()
+    alterarFraseDestinatario();
 }
 function selecionarContato(elemento){
     if (document.querySelectorAll(".selecionado").length > 1) {
@@ -166,8 +167,10 @@ function selecionarContato(elemento){
     alterarFraseDestinatario()
 }
 
-document.querySelector(".escrever-mensagem div input").addEventListener("keydown", function (e){
+function enviarComEnter() { 
+    document.querySelector(".escrever-mensagem  div  input").addEventListener("keydown", function (e){
     if (e.key == "Enter"){
         enviarMensagem(e);
     }
 })
+}
